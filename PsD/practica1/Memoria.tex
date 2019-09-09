@@ -1,0 +1,70 @@
+% Created 2019-03-02 sáb 10:07
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage[catalan]{babel}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\graphicspath{{./images/}}
+
+% This package is used for pretty printing the source files. 
+% Edit to taste.
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58, 0, 0.82}
+\lstset {
+  numbers = left,
+  numberstyle = \tiny\color{mygray}, 
+  emphstyle = \bfseries,
+  commentstyle=\color{mygreen},
+  keywordstyle=\color{blue},
+  language=Octave,
+  rulecolor=\color{black}, %if not set the frame-color may be changed on line-breaks within not-black text
+  title=\lstname,
+  stringstyle=\color{mymauve}
+}
+\tolerance=1000
+\author{David Márquez\and Irene Mollet}
+\date{\today}
+\title{Pràctica 1\\Pseudorandom Noise Generator}
+\newcounter{previCounter}
+\newenvironment{enunciat}{
+  \stepcounter{previCounter}
+  \par\vspace{\baselineskip}\noindent
+  {\bf Tasca~\thepreviCounter.}}{\par\medskip\ignorespacesafterend}
+\begin{document}
+
+\maketitle
+
+\section*{Using the sound card from Octave}
+What is the length of the played sound if you use a sampling frequency F m different that the
+one you have used to record the sound?
+\section*{Noise with normally distributed values}
+
+\section*{Noise with binary values}
+
+\section*{Noise with binary values using LFSR}
+
+\section*{Spectrum of the noise}
+
+\section*{Advanced activity}
+
+\end{document}
+%\begin{figure}[h]
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{x2-amp2}
+%  \caption{Senyal de veu original ampificat }
+%\end{figure}
