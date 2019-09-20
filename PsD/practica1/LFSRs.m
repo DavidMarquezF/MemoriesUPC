@@ -1,5 +1,5 @@
-function LFSRs(n=10,N= 1e5)
-  x3=zeros(N,1);
+function x = LFSRs(n=10,N= 1e5, play=false)
+  x=zeros(N,1);
   sr=ones(n,1);
   for i = 1:N
     switch(n)
@@ -20,9 +20,11 @@ function LFSRs(n=10,N= 1e5)
     endswitch
     sr(2:n) = sr(1:n-1);
     sr(1)=in;
-    x3(i)=in;
+    x(i)=in;
   end
-  x3(x3==0)=-1;
-  play_so(x3)
-
+  x(x==0)=-1;
+  if play
+    play_so(x)
+  endif
+  LFSRs = x;
 endfunction
