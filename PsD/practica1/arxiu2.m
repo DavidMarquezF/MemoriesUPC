@@ -1,16 +1,19 @@
-plotX3=false;
+#Configuració
+plotResults=true;
+
+#Constants
+Fm3=48e3;
+nr=3;
+Fm4=Fm3*nr;
+tf = 2;
 
 v0=-1;
 v1=1;
 
-Fm3=48e3;
-nr=3;
-Fm4=Fm3*nr;
 
-tf = 2;
 
-if(plotX3)
-   figure(2);
+if(plotResults)
+   figure();
 endif
   
 i = 1;
@@ -20,7 +23,7 @@ for n = [13]
   x3=LFSRs(n, N);
   [X3, F]=f_TF(x3, Fm3);
     
-  if(plotX3)
+  if(plotResults)
     subplot(3,1,i)
     plot(F, abs(X3));
     xlabel("f(Hz)");

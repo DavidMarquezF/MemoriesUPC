@@ -1,4 +1,4 @@
-function x = LFSRs(n=10,N= 1e5, play=false)
+function x = LFSRs(n=10,N= 1e5, v0=1, v1=-1)
   x=zeros(N,1);
   sr=ones(n,1);
   for i = 1:N
@@ -22,9 +22,8 @@ function x = LFSRs(n=10,N= 1e5, play=false)
     sr(1)=in;
     x(i)=in;
   end
-  x(x==0)=-1;
-  if play
-    play_so(x)
-  endif
+  x(x==1)=v0;
+  x(x==0)=v1;
+  
   LFSRs = x;
 endfunction
