@@ -101,34 +101,34 @@ En aquesta pràctica s'estudiaran diferents aspectes de les seqüències pseudoa
 \begin{enunciat}
      Visualitzeu i escolteu el senyal generat per a diferents freqüències de mostreig i per a diferents valors de n.
 \end{enunciat}
-Els senyals x1, x2 i x3 son tres senyals basats ens seqüències pseudoaleatories geneares de diferents maneres. 
+Els senyals x1, x2 i x3 són tres senyals basats en seqüències pseudoaleatòries generades de diferents maneres.
 x1 s'ha generat a partir de la funció \texttt{randn}, la qual retorna una matriu de \texttt{Nx1} valors pseudoaleatoris.
-x2 és un vector basat en el vector x1, però convertint tots els seus valors en v0 o v1. En aquest cas v0 = -1 i v1 = 1, ja que d'aquesta manera s'aprofita tot el rang dinàmic de la tarja de sò de l'ordinador.
+x2 és un vector basat en el vector x1, però convertint tots els seus valors en v0 o v1. En aquest cas v0 = -1 i v1 = 1, ja que d'aquesta manera s'aprofita tot el rang dinàmic de la tarja de so de l'ordinador.
 x3 també és un vector binari de longitud ${2^n-1}$, generat a partir d'un liner feedback shift register (LFSR a partir d'ara).
 \paragraph{}
-Per poder generar aquests senyals d'una  manera fàcil s'ha creat dues funcions que s'utilitzen en els fitxers \texttt{arxiu1.m} i \texttt{arxiu2.m}.
-La funció per generar x1 i x2 és senzilla, ja que només ha d'utilitzar la funció randn per generar la seqüència pseudoaleatoria.
-La funció per calcular x3 és més complicada, perquè ha d'implementar el LFSR. Per fer-ho s'ha creat una funció que únicament crea la seqüència numèrica. 
+Per poder generar aquests senyals d'una manera fàcil s'ha creat dues funcions que s'utilitzen en els fitxers \texttt{arxiu1.m} i \texttt{arxiu2.m}.
+La funció per generar x1 i x2 és senzilla, ja que només ha d'utilitzar la funció randn per generar la seqüència pseudoaleatòria.
+La funció per calcular x3 és més complicada, perquè ha d'implementar el LFSR. Per fer-ho s'ha creat una funció que únicament crea la seqüència numèrica.
 
 \lstinputlisting {LFSRs.m}
-Com es pot veure, es pot utilitzar per diversos valors de n. D'aquesta manera s'ha pogut comprobar què passava quan canviaven els valors de n.
+Com es pot veure, es pot utilitzar per diversos valors de n. D'aquesta manera s'ha pogut comprovar què passava quan canviaven els valors de n.
 \paragraph{}
 El programa que s'encarrega de calcular x3 calcula el nombre de mostres necessàries de la següent manera:
 \begin{equation}
      N = (2^{n} - 1) * ceil\Big(\frac{tf * Fm}{2^{n} - 1}\Big)
 \end{equation}
 
-D'aquesta manera es pot veure correctament el senyal en l'espectre frequencial. El que fa és que el nombre de mostres sempre sigui un múltiple del del període en bits ($2^n - 1$) de la seqüència generada amb el LFSR.
+D'aquesta manera es pot veure correctament el senyal en l'espectre freqüencial. El que fa és que el nombre de mostres sempre sigui un múltiple del del període en bits ($2^n - 1$) de la seqüència generada amb el LFSR.
 
-El valor de n equival al nombre de registres del LFSR. Per cada nombre de registres hi ha un polinomi que determina com s'han de col·locar les XOR per obtenir el màxim període de bits. Per tant el valor de n ens diu la freqüència amb la que es repetirà el soroll. Per aquesta raó està directament relacionat amb la freqüència de mostreig. Com més gran és la freqüència de mostreig més ràpid es repetirà el patró. Per exemple, si utilitzem n=16 (període equival a 65535 bits), i una freqüència de mostreig de 96KHz, veiem que podrem escoltar el patró repetit $\frac{96000}{65535}=1.46$ vegades cada segon. És a dir que si mostrem el senyal durant dos segons es podrà escoltar el patró repetit 3 vegades aproximadament.
+El valor de n equival al nombre de registres del LFSR. Per cada nombre de registres hi ha un polinomi que determina com s'han de col·locar les XOR per obtenir el màxim període de bits. Per tant el valor de n ens diu la freqüència amb la qual es repetirà el soroll. Per aquesta raó està directament relacionat amb la freqüència de mostreig. Com més gran és la freqüència de mostreig més ràpid es repetirà el patró. Per exemple, si utilitzem n=16 (període equival a 65535 bits), i una freqüència de mostreig de 96KHz, veiem que podrem escoltar el patró repetit $\frac{96000}{65535}=1.46$ vegades cada segon. És a dir que si mostrem el senyal durant dos segons, es podrà escoltar el patró repetit 3 vegades aproximadament.
 \paragraph{}
-Podem extreure, doncs, que $Fo=\frac{Fm}{2^n-1}$. L'espectre és un tren de deltes (idelament es mostreja amb deltes) situades a la freqüència fonamental i als seus harmònics (Fo, 2Fo, 3Fo, etc.). Per tant quan n autmenta, si $Fm$ es manté constant, Fo s'aproxima a 1Hz. A 1Hz, la oida humana ja no nota gairebé la diferència (la resolució de l'oïda humana és d'aproximadament 3.6KHz), i per tant per a nosaltres, l'espectre frequencial sembla constant, igual que el del soroll blanc. Per aquesta raó com més alta és la n més s'assembla al soroll blanc.
+Podem extreure, doncs, que $Fo=\frac{Fm}{2^n-1}$. L'espectre és un tren de deltes (idealment es mostreja amb deltes) situades a la freqüència fonamental i als seus harmònics (Fo, 2Fo, 3Fo, etc.). Per tant quan n augmenta, si $Fm$ es manté constant, Fo s'aproxima a 1Hz. A 1Hz, la oida humana ja no nota gairebé la diferència (la resolució de l'oïda humana és d'aproximadament 3.6KHz), i per tant per a nosaltres, l'espectre freqüencial sembla constant, igual que el del soroll blanc. Per aquesta raó com més alta és la n més s'assembla al soroll blanc.
 \paragraph{}
-Hem comprobat que a partir de n = 13, no escoltem la diferència. Amb n = 13 i una freqüència de mostreig de 48KHz veiem que Fo ens dóna 5.86Hz, un valor molt proper a la resolució màxima de l'oïda humana.
+Hem comprovat que a partir de n = 13, no escoltem la diferència. Amb n = 13 i una freqüència de mostreig de 48KHz veiem que Fo ens dóna 5.86Hz, un valor molt proper a la resolució màxima de l'oïda humana.
 
 \paragraph{}
-Per altra banda, s'ha canviat Fm deixant n constant. El resultat ha estat que amb Fm molt baixes (12 i 24 KHz) el so es sentia sense aguts.
-Això és degut a que per mostrejar un senyal correctament es necessita una freqüència mínima de $2Fa$. Si mostrejem a 12KHz només es podrà sentir el senyal fins a 6KHz (vegeu \ref{fig:Fm12})
+Per altra banda, s'ha canviat Fm deixant n constant. El resultat ha estat que amb Fm molt baixes (12 i 24 KHz) el so se sentia sense aguts.
+Això és degut al fet que per mostrejar un senyal correctament es necessita una freqüència mínima de $2Fa$. Si mostrejam a 12KHz només es podrà sentir el senyal fins a 6KHz (vegeu \ref{fig:Fm12}).
 \begin{figure}[h]
 \label{Fm12}
   \centering
@@ -137,6 +137,7 @@ Això és degut a que per mostrejar un senyal correctament es necessita una freq
 \end{figure}
 
 \section*{Assaig arxiu2.m}
+
 
 En el cas on x3 és una seqüència de [-1 1 1] repetida N vegades, en el seu espectre es pot veure una delta a cada Fo.
 Per x4, que és la mateixa seqüència amb cada element repetit nr vegades,passa el mateix (Fo és la mateixa), però per les freüències múltiples de Fm4, la delta és nul·la.
