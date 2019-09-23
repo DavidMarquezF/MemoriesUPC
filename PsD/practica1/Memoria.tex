@@ -49,54 +49,11 @@
 
 \maketitle
 
-\section*{Using the sound card from Octave}
-\begin{enunciat}
-What is the length of the played sound if you use a sampling frequency Fm different that the
-one you have used to record the sound?
-\end{enunciat}
-
-\section*{Noise with normally distributed values}
-\begin{enunciat}
-Play with randn.m to know what a normally distribution is.
-\end{enunciat}
-Sona com el soroll?
-
-
-\section*{Noise with binary values}
-\begin{enunciat}
-Comparar si x2 i x1 sonen similars (x2 és binari)
-\end{enunciat}
-
-\section*{Noise with binary values using LFSR}
-Captura del codi 
-Diferències entre les diferents n i a partir de quina n es comença a sentir normal.
-Explicar perquè.
-
-
-\section*{Spectrum of the noise}
-
-Entre quines Fm em variat i quines son les diferències.
-Captures dels espectres
-
-
-
-
-
-
-\section*{Advanced activity}
-
-Diferencies de so entre els dos senyals
-Fotos oscil·loscopi.
-Explicació fotos
-
-
-
-%MEMORIA OKEY A PARTIR D'AQUI------------------------------------------------------------------------------------------------------------
 \section*{Introducció}
-En aquesta pràctica s'estudiaran diferents aspectes de les seqüències pseudoaleatories de soroll.
+En aquesta pràctica s'estudiaran diferents metodologies per generar soroll blanc. L'objectiu principal és aconseguir determinar com s'ha de combinar la freqüència de mostreig amb el valor n del linear feedback shift register per aconseguir generar soroll blanc.
 
 
-
+\newpage
 \section*{Assaig arxiu1.m}
 \begin{enunciat}
      Visualitzeu i escolteu el senyal generat per a diferents freqüències de mostreig i per a diferents valors de n.
@@ -118,11 +75,11 @@ El programa que s'encarrega de calcular x3 calcula el nombre de mostres necessà
      N = (2^{n} - 1) * ceil\Big(\frac{tf * Fm}{2^{n} - 1}\Big)
 \end{equation}
 
-D'aquesta manera es pot veure correctament el senyal en l'espectre freqüencial. El que fa és que el nombre de mostres sempre sigui un múltiple del del període en bits ($2^n - 1$) de la seqüència generada amb el LFSR.
+D'aquesta manera es pot veure correctament el senyal en l'espectre freqüencial. Amb aquesta expressió s'aconsegueix que el nombre de mostres sempre sigui un múltiple del del període en bits ($2^n - 1$) de la seqüència generada amb el LFSR.
 
 El valor de n equival al nombre de registres del LFSR. Per cada nombre de registres hi ha un polinomi que determina com s'han de col·locar les XOR per obtenir el màxim període de bits. Per tant el valor de n ens diu la freqüència amb la qual es repetirà el soroll. Per aquesta raó està directament relacionat amb la freqüència de mostreig. Com més gran és la freqüència de mostreig més ràpid es repetirà el patró. Per exemple, si utilitzem n=16 (període equival a 65535 bits), i una freqüència de mostreig de 96KHz, veiem que podrem escoltar el patró repetit $\frac{96000}{65535}=1.46$ vegades cada segon. És a dir que si mostrem el senyal durant dos segons, es podrà escoltar el patró repetit 3 vegades aproximadament.
 \paragraph{}
-Podem extreure, doncs, que $Fo=\frac{Fm}{2^n-1}$. L'espectre és un tren de deltes (idealment es mostreja amb deltes) situades a la freqüència fonamental i als seus harmònics (Fo, 2Fo, 3Fo, etc.). Per tant quan n augmenta, si $Fm$ es manté constant, Fo s'aproxima a 1Hz. A 1Hz, la oida humana ja no nota gairebé la diferència (la resolució de l'oïda humana és d'aproximadament 3.6KHz), i per tant per a nosaltres, l'espectre freqüencial sembla constant, igual que el del soroll blanc. Per aquesta raó com més alta és la n més s'assembla al soroll blanc.
+Podem extreure, doncs, que $Fo=\frac{Fm}{2^n-1}$. L'espectre és un tren de deltes (idealment es mostreja amb deltes) situades a la freqüència fonamental i als seus harmònics (Fo, 2Fo, 3Fo, etc.). Per tant quan n augmenta, si $Fm$ es manté constant, Fo s'aproxima a 1Hz. A 1Hz, la oida humana ja no nota gairebé la diferència (la resolució de l'oïda humana és d'aproximadament 3.6Hz), i per tant per a nosaltres, l'espectre freqüencial sembla constant, igual que el del soroll blanc. Per aquesta raó com més alta és la n més s'assembla al soroll blanc.
 \paragraph{}
 Hem comprovat que a partir de n = 13, no escoltem la diferència. Amb n = 13 i una freqüència de mostreig de 48KHz veiem que Fo ens dóna 5.86Hz, un valor molt proper a la resolució màxima de l'oïda humana.
 
@@ -130,24 +87,46 @@ Hem comprovat que a partir de n = 13, no escoltem la diferència. Amb n = 13 i u
 Per altra banda, s'ha canviat Fm deixant n constant. El resultat ha estat que amb Fm molt baixes (12 i 24 KHz) el so se sentia sense aguts.
 Això és degut al fet que per mostrejar un senyal correctament es necessita una freqüència mínima de $2Fa$. Si mostrejam a 12KHz només es podrà sentir el senyal fins a 6KHz (vegeu \ref{fig:Fm12}).
 \begin{figure}[h]
-\label{Fm12}
+\label{fig:Fm12}
   \centering
   \includegraphics[width=0.5\textwidth]{img/Fm12}
   \caption{LFSR, n=16, Fm=12KHz}
 \end{figure}
-
+Per aquesta raó la freqüència de mostreig que utilitzem normalment és de 48KHz. Amb aquesta es pot representar senyals correctament de fins a 24KHz (hi ha un marge respecte als 20KHz que es considera que és fins a on l'oïda humana pot sentir).
+\newpage
 \section*{Assaig arxiu2.m}
+\begin{enunciat}
+     Compareu x3  i x4 (espectre i audio) per a diferents valors dels paràmetres Fm, n i nr.
+\end{enunciat}
+x3 és un senyal de longitud N i freqüència de mostreig Fm3 generat a partir d'un LSFR. 
+x4 és el mateix senyal que x3 però amb cada valor repetit n3 vegades i amb una freqüencia de Fm3*nr.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lllll}
+\begin{tabular}[c]{@{}l@{}}Fm\\ (kHz)\end{tabular} & n     & nr              & Comentaris                                                                               &  \\
+12                                                 & 10    & \textgreater{}2 & x4 més agut de x3.                                                                       &  \\
+48                                                 & 10    & \textgreater{}2 & Gairabé no hi ha diferència entre x3 i x4. No s'asembla gens al soroll blanc.            &  \\
+96                                                 & 10    & \textgreater{}2 & Igual que Fm = 96.                                                                       &  \\
+12                                                 & 13-16 & \textgreater{}2 & El senyal x4 és mes semblant al soroll blanc que el x3 encara que mantenen el mateix to. &  \\
+24                                                 & 13-16 & \textgreater{}2 & Gairabé no hi ha diferència entre x3 i x4.                                               &  \\
+48                                                 & 13-16 & \textgreater{}2 & Gairabé no hi ha diferència entre x3 i x4.                                               &  \\
+96                                                 & 13-16 & \textgreater{}2 & Igual que amb Fm= 48. Com més augmenta la freqüència, més similar al soroll blanc.       &  \\
+                                                   &       &                 &                                                                                          & 
+\end{tabular}
+\end{table}
 
 
-En el cas on x3 és una seqüència de [-1 1 1] repetida N vegades, en el seu espectre es pot veure una delta a cada Fo.
-Per x4, que és la mateixa seqüència amb cada element repetit nr vegades,passa el mateix (Fo és la mateixa), però per les freüències múltiples de Fm4, la delta és nul·la.
+En les imatges dels següents espectres es pot veure la diferència entre x3 i x4 i l'efecte que té multiplicar per nr.
+S'observa que l'espectre de x4 és la funció sinc.
 
-
-
+Aquest fet és degut a que x4 és un senyal format per graons de longitud nr mostres. La transformada de   \begin{equation}
+     x4 = \sum_{k=-\infty}^{\infty}\prod_{}(\frac{t-k f_o) = f_o \sum_{k=-\infty}^{\infty} sinc(nf_o) \delta(f - nf_o) 
+    \end{equation}
+    
+    $f_o = \frac{F_m}{2^n-1}$
 
 NOSE EL PERQUÈ
-
-Quan x3 és un senyal pseudoaleatori generat pel SLRF, x4 
 
 
 
@@ -157,10 +136,12 @@ Compareu x3 amb x4 (espectre i audio) per a diferents valors dels paràmetres Fm
 A les següents captures de l'oscil·loscopi es pot veure com el senyal x4 és més "polit" que el x3. Això es degut a que el x4 té mes resolució.
 
 A l'espectre del senyal x4 es pot observar com és 0 quan F és Fm3
-\section{Conclusions}
-
-
-
+\newpage
+\section*{Conclusions}
+Per poder generar soroll blanc amb LFSR, s'ha de trobar una combinació de Fm n adequada, de manera que Fo sigui <= 3.6Hz.
+Com a mínim podem utilitzar una Fm de 48KHz o 44100Hz (les més habituals) per poder representar tot l'espectre freqüencial audible per l'ésser humà. Per tant podrem considerar que unes n vàlides serien 14, 15 i 16, ja que la seva resolució és de 2.929, 1.46 i 0.73Hz respectivament. n = 13, amb temps llargs es nota massa que es repeteix per poder-lo considerar vàlid.
+\paragraph{}
+Ho hem comparat amb \href{https://soundcloud.com/onlinetonegenerator/white-noise}{aquest soroll blanc}. Per n=14 es nota (en el nostre) que es repeteix el mateix patró contínuament fàcilment. Amb n=15 passa exactament el mateix.  Finalment, amb n=16 semblen gairebé el mateix so.
 \end{document}
 %\begin{figure}[h]
 %  \centering
