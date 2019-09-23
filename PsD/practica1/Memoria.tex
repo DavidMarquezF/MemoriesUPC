@@ -118,24 +118,34 @@ x4 és el mateix senyal que x3 però amb cada valor repetit n3 vegades i amb una
 
 
 En les imatges dels següents espectres es pot veure la diferència entre x3 i x4 i l'efecte que té multiplicar per nr.
-S'observa que l'espectre de x4 és la funció sinc.
-
-Aquest fet és degut a que x4 és un senyal format per graons de longitud nr mostres. La transformada de   \begin{equation}
+S'observa que l'espectre de x4 és la funció sinc, que compleix que cada un periode de Fm3 Hz s'anul·la.
+\begin{figure}[h]
+\label{fig:Fm12}
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/f12n3}
+  \caption{LFSR, nr=3, Fm=12KHz}
+\end{figure}
+\begin{figure}[h]
+\label{fig:Fm12}
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/fn12n10}
+  \caption{LFSR, nr=10, Fm=12KHz}
+\end{figure}
+Aquest fet és degut a que x4 és un senyal format per graons d'amplada nr mostres. La transformada d'aquest senyal és 
+    \begin{equation}
      x4 = \sum_{k=-\infty}^{\infty}\prod_{}(\frac{t-k f_o) = f_o \sum_{k=-\infty}^{\infty} sinc(nf_o) \delta(f - nf_o) 
     \end{equation}
     
     $f_o = \frac{F_m}{2^n-1}$
 
-NOSE EL PERQUÈ
+Com ja era d'esperar, $f_o$ és la mateixa tant per $x3$ com per $x4$ ja que
+    \begin{equation}    
+     f_o_3 = \frac{F_m}{2^n-1}
+    \end{equation}
+    \begin{equation}
+     f_o_4 = \frac{F_mnr}{(2^n-1)nr}= f_o_3
+    \end{equation}
 
-
-
-Compareu x3 amb x4 (espectre i audio) per a diferents valors dels paràmetres Fm, n i nr.
-
-
-A les següents captures de l'oscil·loscopi es pot veure com el senyal x4 és més "polit" que el x3. Això es degut a que el x4 té mes resolució.
-
-A l'espectre del senyal x4 es pot observar com és 0 quan F és Fm3
 \newpage
 \section*{Conclusions}
 Per poder generar soroll blanc amb LFSR, s'ha de trobar una combinació de Fm n adequada, de manera que Fo sigui <= 3.6Hz.
