@@ -1,0 +1,40 @@
+#+TITLE: ADC2PWM: Informació d'interès
+
+* per veure aquest document com a pdf
+** C-c C-e d
+Export as LaTeX file and convert it to PDF, then open the PDF using the default viewer.
+** C-c C-e p
+Export as LaTeX file and convert it to PDF file.
+
+* make
+** DEVICE
++ podeu canviar 'DEVICE=/dev/ttyACM0' per el vostre 'device'
+** CFLAGS
++ dins de 'CFLAGS' podeu canviar les opcions d'optimització
++ -O0 Most optimizations are completely disabled 
++ -Os Optimize for size
++ -Ofast 
+** make + tabulador mostra totes les opcions
+*** make all
++ compila el main (make main), el carrega a l'arduino (load\_main), informa de l'ús de memòria a l'AVR (make size), fa neteja (make clean)
+*** make main.s
++ útil per veure el codi en assemblador
+*** make clean
++ esborra arxius intermitjos
+*** make picocom
++ obre picocom a la velocitat de 115200bps
+*** make size
++ informa de l'ús de memòria a l'AVR
++ molt útil després de fer 'make main'
++ 'make main size'
+*** make touch 
++ reseteja l'antiguitat d'un arxiu de manera que en fer un make obligues a repetir la compilació encara que no hagis modificat les fonts
++ molt útil si alguna dependència no és correcta o allò que canviem és el Makefile (que normalment no afegim a les dependencies; observeu que en el vostre Makefile sí que hi és)
++ després de 'make touch', el 'make main' mai dirà " `main' is up to date."
+
+* avr-size
++ avr-size -C --mcu=atmega328p main	
++ size --format=SysV main
+
+* avr-objdump 
++ avr-objdump -t main
